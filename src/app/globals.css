@@ -1,0 +1,319 @@
+@import "tailwindcss";
+
+/* Palette: black, white and a single gold accent, in the style of premium specialty roasters.
+   Token names are kept from earlier builds so every component re-themes. */
+:root {
+  --espresso: #000000;
+  --espresso-soft: #222222;
+  --cream: #ffffff;
+  --cream-soft: #f4f4f4;
+  --caramel: #d1aa67;
+  --caramel-bright: #e0bf85;
+  --gold-text: #8a6a2e;
+  --beige: #f4f4f4;
+  --sage: #5f6b52;
+  --sage-soft: #8b9a78;
+  --ink: #181818;
+  --line: rgba(24, 24, 24, 0.12);
+  --line-dark: rgba(255, 255, 255, 0.16);
+}
+
+@theme inline {
+  --font-display: var(--font-archivo);
+  --font-body: var(--font-archivo);
+  --font-wordmark: var(--font-cinzel);
+  --color-espresso: var(--espresso);
+  --color-espresso-soft: var(--espresso-soft);
+  --color-cream: var(--cream);
+  --color-cream-soft: var(--cream-soft);
+  --color-caramel: var(--caramel);
+  --color-caramel-bright: var(--caramel-bright);
+  --color-beige: var(--beige);
+  --color-sage: var(--sage);
+  --color-sage-soft: var(--sage-soft);
+  --color-ink: var(--ink);
+  --color-line: var(--line);
+  --color-line-dark: var(--line-dark);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+/* Headings: medium-weight grotesque with tight tracking; neutralise the italic utility from the serif build. */
+.font-display {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.font-display.italic {
+  font-style: normal;
+}
+
+/* Flat, sharp shapes: 2px corners on buttons, cards and images. */
+a.rounded-full,
+button.rounded-full,
+.rounded-xl,
+.rounded-2xl,
+.rounded-3xl,
+.rounded-lg {
+  border-radius: 2px;
+}
+input.rounded-full,
+input.rounded-xl {
+  border-radius: 2px;
+}
+
+/* Buttons: small, uppercase, tracked. */
+a.rounded-full,
+button.rounded-full {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Gold buttons and badges carry black text for contrast. */
+.bg-caramel.text-white {
+  color: #000;
+}
+.text-caramel {
+  color: var(--gold-text);
+}
+.bg-espresso .text-caramel,
+.bg-black .text-caramel {
+  color: var(--caramel);
+}
+
+/* Centered headings centre their rule too. */
+main h2.font-display.text-3xl.text-center::after {
+  margin-inline: auto;
+}
+
+/* Section headings get a short gold rule underneath. */
+main h2.font-display.text-3xl::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 2px;
+  margin-top: 14px;
+  background: var(--caramel);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--caramel);
+  outline-offset: 3px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+.ripple {
+  animation: ripple 1.4s ease-out forwards;
+}
+
+/* Intro sequence: bean falls (0.5s delay, 1.55s), lands on the coffee at ~2.05s. */
+@keyframes beanFall {
+  0% {
+    top: -90px;
+    transform: translateX(-50%) rotate(0deg);
+    animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.6);
+  }
+  78% {
+    top: calc(100% - 52px);
+    transform: translateX(-50%) rotate(480deg);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    top: calc(100% + 6px);
+    transform: translateX(-50%) rotate(560deg);
+  }
+}
+.bean-fall {
+  top: -90px;
+  animation: beanFall 2s both;
+  animation-delay: 0.5s;
+}
+
+@keyframes beanTrail {
+  0%,
+  8% {
+    opacity: 0;
+  }
+  35%,
+  70% {
+    opacity: 0.55;
+  }
+  78%,
+  100% {
+    opacity: 0;
+  }
+}
+.bean-trail {
+  animation: beanTrail 2s both;
+  animation-delay: 0.5s;
+}
+
+@keyframes cupImpact {
+  0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(1.05, 0.92);
+  }
+  55% {
+    transform: scale(0.98, 1.03);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+.cup-impact {
+  transform-origin: 50% 100%;
+  animation: cupImpact 0.6s ease-out both;
+  animation-delay: 2.05s;
+}
+
+@keyframes surfaceShadow {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2);
+  }
+  90% {
+    opacity: 0.55;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+.surface-shadow {
+  opacity: 0;
+  animation: surfaceShadow 1.6s ease-in both;
+  animation-delay: 0.6s;
+}
+
+@keyframes droplet {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+.droplet {
+  opacity: 0;
+  animation: droplet 0.9s cubic-bezier(0.2, 0.8, 0.4, 1) both;
+  animation-delay: 2.05s;
+}
+@keyframes dropletRise {
+  0% {
+    transform: translate(0, 0);
+  }
+  40% {
+    transform: translate(calc(var(--dx) * 0.6), var(--rise));
+  }
+  100% {
+    transform: translate(var(--dx), 30px);
+  }
+}
+.droplet-arc {
+  animation: dropletRise 0.9s ease-in-out both;
+  animation-delay: 2.05s;
+}
+
+@keyframes ringOut {
+  0% {
+    opacity: 0.85;
+    transform: translateX(-50%) scale(0.25);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scale(1.25);
+  }
+}
+.ring-out {
+  opacity: 0;
+  animation: ringOut 1.2s ease-out both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes steamRise {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-14px);
+    opacity: 0.8;
+  }
+}
+.steam {
+  animation: steamRise 2.4s ease-in-out infinite;
+}
+
+@keyframes chevronBob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+.chevron-bob {
+  animation: chevronBob 1.6s ease-in-out infinite;
+}
